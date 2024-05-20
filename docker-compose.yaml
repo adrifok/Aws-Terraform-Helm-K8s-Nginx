@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  frontend:
+    image: adrifok/frontend
+    environment:
+      - BACKEND_API_URL=http://backend:4000
+      - CLIENT_API_URL=http://${PRIVATE_INSTANCE_IP}:3000
+backend:
+    image: adrifok/backend 
+    environment:
+      - REDIS_SERVER=redis:6379
+
+redis:
+    image: redis
+
+nginx:
+    image: nginx
+    volumes:
+      - ./nginx.conf.template:/etc/nginx/nginx.conf.template:ro
+    command: /bin/bash -c "envsubst '$$PRIVATE_INSTANCE_IP' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+    ports:
+      - "80:80/tcp"
+    depends_on:
+      - frontend
+      - backend
+    environment:
+      - PRIVATE_INSTANCE_IP=${PRIVATE_INSTANCE_IP}
+  

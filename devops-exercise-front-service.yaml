@@ -1,0 +1,12 @@
+# devops-exercise-front-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-exercise-front
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: devops-exercise-front

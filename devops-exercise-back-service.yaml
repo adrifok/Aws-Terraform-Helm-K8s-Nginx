@@ -1,0 +1,12 @@
+# devops-exercise-back-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-exercise-back
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 4000
+  selector:
+    app: devops-exercise-back

@@ -1,0 +1,29 @@
+# redis-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:latest
+        ports:
+        - containerPort: 6379
+        env:  # Add the environment variables here
+        - name: REDIS_SERVER
+          value: redis-container
+        - name: REDIS_PORT
+          value: localhost:6379
+        #- name: REDIS_PASSWORD
+        # value: "your-redis-password"
+
+          

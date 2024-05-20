@@ -1,0 +1,26 @@
+# devops-exercise-front-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adrifok-front
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: adrifok-front
+  template:
+    metadata:
+      labels:
+        app: adrifok-front
+    spec:
+      containers:
+      - name: adrifok-front
+        image: adrifok-front:latest
+        ports:
+        - containerPort: 3000
+         env:
+         - name: BACKEND_API_URL
+           value: "http://backend:4000"  
+         - name: CLIENT_API_URL
+           value: "http://frontend:3000"  
+
